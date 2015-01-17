@@ -18,6 +18,11 @@ public class MomirTestApplication extends MomirApplication implements Injectable
     @Override
     public void onCreate() {
         super.onCreate();
+        createGraph();
+    }
+
+    @Override
+    protected void createGraph() {
         mGraph = ObjectGraph.create(getModules());
     }
 

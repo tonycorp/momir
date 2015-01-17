@@ -28,10 +28,14 @@ public class MomirApplication extends Application implements Injectable {
     @Override
     public void onCreate() {
         super.onCreate();
-        mGraph = ObjectGraph.create(getModules());
+        createGraph();
         inject(this);
         mBus.register(new MomirService(this));
         mBus.register(this);
+    }
+
+    protected void createGraph() {
+        mGraph = ObjectGraph.create(getModules());
     }
 
     public Object[] getModules() {
