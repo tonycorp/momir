@@ -20,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <provider
+            android:name="com.magic.momir.providers.MomirContentProvider"
+            android:authorities="com.magic.momir.app.providers"
+            android:exported="false" />
     </application>
 
 </manifest>

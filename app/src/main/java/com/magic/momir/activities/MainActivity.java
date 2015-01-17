@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.magic.momir.R;
+import com.magic.momir.services.MomirService;
 import com.magic.momir.services.MomirService.ChooseCardEvent;
 import com.magic.momir.services.MomirService.CardChosenEvent;
 import com.magic.momir.utils.EndpointUtil;
@@ -30,6 +32,11 @@ public class MainActivity extends MomirActivity {
         final Integer multiverseId = event.getCard().getMultiverseId();
         final String imageUrl = EndpointUtil.getImageEndpoint(String.valueOf(multiverseId));
         Picasso.with(this).load(imageUrl).into(mCardImage);
+    }
+
+    @Subscribe
+    public void onApiError(final MomirService.ApiErrorEvent event) {
+        Toast.makeText(this, event.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.activity_main_button)
