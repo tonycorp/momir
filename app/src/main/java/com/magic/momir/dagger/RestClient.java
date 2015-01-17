@@ -1,6 +1,8 @@
-package com.magic.momir.rest;
+package com.magic.momir.dagger;
 
 import com.magic.momir.activities.MainActivity;
+import com.magic.momir.rest.MomirApiService;
+import com.magic.momir.services.MomirService;
 import com.magic.momir.utils.EndpointUtil;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -12,7 +14,10 @@ import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
 @Module(
-        injects = MainActivity.class,
+        injects = {
+                MainActivity.class,
+                MomirService.class
+        },
         library = true,
         complete = false
 )

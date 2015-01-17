@@ -1,13 +1,10 @@
 package com.magic.momir;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.magic.momir.dagger.Injectable;
-import com.magic.momir.rest.RestClientMock;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.magic.momir.dagger.OttoModuleMock;
+import com.magic.momir.dagger.RestClientMock;
 
 import dagger.ObjectGraph;
 
@@ -21,13 +18,13 @@ public class MomirTestApplication extends MomirApplication implements Injectable
     @Override
     public void onCreate() {
         super.onCreate();
-
-        mGraph = ObjectGraph.create(new RestClientMock());//getModules());
+        mGraph = ObjectGraph.create(getModules());
     }
 
-    public List<Object> getModules() {
-        final List<Object> modules = new ArrayList<>();
-        modules.add(new RestClientMock());
+    public Object[] getModules() {
+        final Object[] modules = new Object[2];
+        modules[0] = new RestClientMock();
+        modules[1] = new OttoModuleMock();
         return modules;
     }
 

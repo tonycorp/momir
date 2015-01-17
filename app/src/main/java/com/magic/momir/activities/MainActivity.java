@@ -1,76 +1,42 @@
 package com.magic.momir.activities;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.magic.momir.R;
-import com.magic.momir.models.Card;
-import com.magic.momir.rest.MomirApiService;
+import com.magic.momir.services.MomirService.ChooseCardEvent;
+import com.magic.momir.services.MomirService.CardChosenEvent;
 import com.magic.momir.utils.EndpointUtil;
+import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
 
-import javax.inject.Inject;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 public class MainActivity extends MomirActivity {
-
-    @Inject
-    protected MomirApiService mApi;
-    private ImageView mImageView;
+    @InjectView(R.id.activity_main_image) protected ImageView mCardImage;
+    @InjectView(R.id.activity_main_cmc) protected EditText mCmc;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        final EditText editText = (EditText) findViewById(R.id.activity_main_cmc);
-        mImageView = (ImageView) findViewById(R.id.activity_main_image);
-        final Button button = (Button) findViewById(R.id.activity_main_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String cmc = editText.getText().toString();
-                mApi.getCards(EndpointUtil.getCardQuery(cmc), new Callback<Card[]>() {
-                    @Override
-                    public void success(Card[] response, Response response2) {
-                        Log.d("TEST", "LENGTH = " + response.length);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.e("TEST", "ERROR: " + error.getLocalizedMessage());
-                    }
-                });
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-            }
-        });
+    public int getContentViewId() {
+        return R.layout.activity_main;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    @Subscribe
+    public void onCardsLoaded(final CardChosenEvent event){
+        final Integer multiverseId = event.getCard().getMultiverseId();
+        final String imageUrl = EndpointUtil.getImageEndpoint(String.valueOf(multiverseId));
+        Picasso.with(this).load(imageUrl).into(mCardImage);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    @OnClick(R.id.activity_main_button)
+    public void getData(){
+        final String cmc = mCmc.getText().toString();
+        mBus.post(new ChooseCardEvent(cmc));
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mCmc.getWindowToken(), 0);
     }
 }

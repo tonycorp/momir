@@ -1,5 +1,7 @@
-package com.magic.momir.rest;
+package com.magic.momir.dagger;
 
+
+import com.magic.momir.rest.MockData;
 
 import java.io.IOException;
 import java.util.Collections;

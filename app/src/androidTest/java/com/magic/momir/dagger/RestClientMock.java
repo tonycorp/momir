@@ -1,7 +1,8 @@
-package com.magic.momir.rest;
+package com.magic.momir.dagger;
 
 import com.magic.momir.activities.MainActivity;
 import com.magic.momir.activities.MainActivityTest;
+import com.magic.momir.rest.MomirApiService;
 import com.magic.momir.utils.EndpointUtil;
 
 import org.mockito.Mock;
