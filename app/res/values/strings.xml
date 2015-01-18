@@ -3,7 +3,8 @@
 
     <string name="app_name">Momir</string>
     <string name="enter_cmc">Enter CMC:</string>
-    <string name="action_settings">Settings</string>
+    <string name="images_enabled">Images Enabled</string>
+    <string name="images_disabled">Images Disabled</string>
     <string name="momir">Momir!</string>
 
 </resources>

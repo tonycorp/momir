@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.magic.momir.MomirApplication;
 import com.magic.momir.R;
+import com.magic.momir.utils.SharedPrefUtil;
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
@@ -42,12 +43,20 @@ public abstract class MomirActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        final MenuItem item = menu.findItem(R.id.action_images_allowed);
+        final boolean currentState = SharedPrefUtil.imagesEnabled(this);
+        item.setTitle(currentState ? R.string.images_enabled : R.string.images_disabled);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
+        if (id == R.id.action_images_allowed) {
+            final boolean currentState = SharedPrefUtil.toggleImages(this);
+            item.setTitle(currentState ? R.string.images_enabled : R.string.images_disabled);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

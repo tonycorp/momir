@@ -4,9 +4,9 @@ import com.magic.momir.models.Card;
 
 import retrofit.Callback;
 import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit.http.Path;
 
 public interface MomirApiService {
-    @GET("/search")
-    void getCards(@Query("?q") final String query, final Callback<Card[]> callback);
+    @GET("/momir/{cmc}")
+    public void getCard(@Path("cmc") final String query, final Callback<Card[]> callback);
 }

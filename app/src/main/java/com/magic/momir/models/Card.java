@@ -22,7 +22,7 @@ public class Card {
     protected String mFlavor;
     @SerializedName("colors")
     protected String[] mColors;
-    @SerializedName("manacost")
+    @SerializedName("manaCost")
     protected String mManacost;
     @SerializedName("convertedManaCost")
     protected Integer mConvertedManaCost;
