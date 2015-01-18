@@ -55,6 +55,8 @@ public class Card {
     @SerializedName("releasedAt")
     protected String mReleasedAt;
 
+    public Card(){}
+
     public Integer getMultiverseId() {
         return mMultiverseId;
     }

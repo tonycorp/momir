@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.magic.momir.dagger.Injectable;
 import com.magic.momir.dagger.OttoModule;
+import com.magic.momir.dagger.PicassoModule;
 import com.magic.momir.dagger.RestClient;
 import com.magic.momir.services.MomirService;
 import com.squareup.otto.Bus;
@@ -37,9 +38,10 @@ public class MomirApplication extends Application implements Injectable {
     }
 
     public Object[] getModules() {
-        final Object[] modules = new Object[2];
+        final Object[] modules = new Object[3];
         modules[0] = new RestClient();
         modules[1] = new OttoModule();
+        modules[2] = new PicassoModule(this);
         return modules;
     }
 

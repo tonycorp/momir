@@ -1,23 +1,18 @@
 package com.magic.momir.dagger;
 
 import com.magic.momir.activities.MainActivity;
-import com.magic.momir.activities.MainActivityTest;
 import com.magic.momir.rest.MomirApiService;
-import com.magic.momir.utils.EndpointUtil;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit.RestAdapter;
 
 @Module(
         injects = {
-                MainActivity.class,
-                MainActivityTest.class
+                MainActivity.class
         },
         overrides = true,
         library = true,

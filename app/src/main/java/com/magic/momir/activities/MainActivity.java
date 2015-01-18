@@ -19,6 +19,8 @@ import com.magic.momir.utils.SharedPrefUtil;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
+import javax.inject.Inject;
+
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -27,6 +29,13 @@ public class MainActivity extends MomirActivity {
     @InjectView(R.id.activity_main_image) protected ImageView mCardImage;
     @InjectView(R.id.activity_main_cmc) protected EditText mCmc;
     @InjectView(R.id.activity_main_no_images) protected LinearLayout mNoImage;
+    @InjectView(R.id.activity_card_name) protected TextView mCardName;
+    @InjectView(R.id.activity_card_manacost) protected TextView mManaCost;
+    @InjectView(R.id.activity_card_description) protected TextView mDescription;
+    @InjectView(R.id.activity_card_type_subtype) protected TextView mTypeSubtype;
+    @InjectView(R.id.activity_card_power_toughness) protected TextView mPowerToughness;
+
+    @Inject protected Picasso mPicasso;
 
     @Override
     public int getContentViewId() {
@@ -38,7 +47,7 @@ public class MainActivity extends MomirActivity {
         if (SharedPrefUtil.imagesEnabled(this)) {
             final Integer multiverseId = event.getCard().getMultiverseId();
             final String imageUrl = EndpointUtil.getImageEndpoint(String.valueOf(multiverseId));
-            Picasso.with(this).load(imageUrl).into(mCardImage);
+            mPicasso.load(imageUrl).into(mCardImage);
             mNoImage.setVisibility(View.GONE);
             mCardImage.setVisibility(View.VISIBLE);
         } else {
@@ -49,11 +58,11 @@ public class MainActivity extends MomirActivity {
     }
 
     protected void populateCardData(final Card card) {
-        ((TextView)mNoImage.findViewById(R.id.activity_card_name)).setText(card.getName());
-        ((TextView)mNoImage.findViewById(R.id.activity_card_manacost)).setText(card.getManacost());
-        ((TextView)mNoImage.findViewById(R.id.activity_card_description)).setText(card.getDescription());
-        ((TextView)mNoImage.findViewById(R.id.activity_card_type_subtype)).setText(card.getType() + " - " + card.getSubType());
-        ((TextView)mNoImage.findViewById(R.id.activity_card_power_toughness)).setText(card.getPower() + "/" + card.getToughness());
+        mCardName.setText(card.getName());
+        mManaCost.setText(card.getManacost());
+        mDescription.setText(card.getDescription());
+        mTypeSubtype.setText(card.getType() + " - " + card.getSubType());
+        mPowerToughness.setText(card.getPower() + "/" + card.getToughness());
     }
 
     @Subscribe
