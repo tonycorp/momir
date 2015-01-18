@@ -2,6 +2,8 @@ package com.magic.momir.dagger;
 
 import com.magic.momir.activities.MainActivity;
 import com.magic.momir.rest.MomirApiService;
+import com.magic.momir.services.MomirService;
+import com.magic.momir.services.MomirServiceTest;
 
 import org.mockito.Mockito;
 
@@ -12,7 +14,9 @@ import dagger.Provides;
 
 @Module(
         injects = {
-                MainActivity.class
+                MainActivity.class,
+                MomirService.class,
+                MomirServiceTest.class
         },
         overrides = true,
         library = true,

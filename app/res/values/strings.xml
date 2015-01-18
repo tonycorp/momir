@@ -6,5 +6,6 @@
     <string name="images_enabled">Images Enabled</string>
     <string name="images_disabled">Images Disabled</string>
     <string name="momir">Momir!</string>
+    <string name="no_creature">"No Creature With CMC "</string>
 
 </resources>

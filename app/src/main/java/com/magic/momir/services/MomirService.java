@@ -3,6 +3,7 @@ package com.magic.momir.services;
 import android.content.Context;
 
 import com.magic.momir.MomirApplication;
+import com.magic.momir.R;
 import com.magic.momir.models.Card;
 import com.magic.momir.rest.MomirApiService;
 import com.squareup.otto.Bus;
@@ -17,8 +18,10 @@ import retrofit.client.Response;
 public class MomirService {
     @Inject protected MomirApiService mApi;
     @Inject protected Bus mBus;
+    private final Context mContext;
 
     public MomirService(final Context context){
+        mContext = context;
         MomirApplication.getInjectable(context).inject(this);
     }
 
@@ -28,7 +31,7 @@ public class MomirService {
             @Override
             public void success(Card[] response, Response response2) {
                 if (response.length == 0) {
-                    mBus.post(new ApiErrorEvent("No Creature With CMC " + event.getCmc()));
+                    mBus.post(new ApiErrorEvent(mContext.getString(R.string.no_creature) + event.getCmc()));
                 } else {
                     mBus.post(new CardChosenEvent(response[0]));
                 }

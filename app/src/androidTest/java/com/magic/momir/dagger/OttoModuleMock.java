@@ -5,6 +5,7 @@ import com.magic.momir.MomirTestApplication;
 import com.magic.momir.activities.MainActivity;
 import com.magic.momir.activities.MainActivityTest;
 import com.magic.momir.services.MomirService;
+import com.magic.momir.services.MomirServiceTest;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -20,7 +21,8 @@ import static org.mockito.Mockito.mock;
                 MainActivityTest.class,
                 MomirApplication.class,
                 MomirTestApplication.class,
-                MomirService.class
+                MomirService.class,
+                MomirServiceTest.class
         },
         library = true,
         complete = false
