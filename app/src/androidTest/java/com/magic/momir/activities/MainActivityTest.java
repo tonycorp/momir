@@ -96,4 +96,24 @@ public class MainActivityTest {
         assertThat(mActivity.mNoImage).isVisible();
         verifyZeroInteractions(mPicasso);
     }
+
+    @Test
+    public void onClickOfPlayerOne_sendsAddEvent(){
+        mActivity.mCard = new Card();
+        mActivity.mPlayerOne.performClick();
+        final ArgumentCaptor<MomirService.AddCardEvent> captor = ArgumentCaptor.forClass(MomirService.AddCardEvent.class);
+        verify(mBus).post(captor.capture());
+        final MomirService.AddCardEvent value = captor.getValue();
+        assertThat(value.getCard().getBoard()).isEqualTo(1);
+    }
+
+    @Test
+    public void onClickOfPlayerTwo_sendsAddEvent(){
+        mActivity.mCard = new Card();
+        mActivity.mPlayerTwo.performClick();
+        final ArgumentCaptor<MomirService.AddCardEvent> captor = ArgumentCaptor.forClass(MomirService.AddCardEvent.class);
+        verify(mBus).post(captor.capture());
+        final MomirService.AddCardEvent value = captor.getValue();
+        assertThat(value.getCard().getBoard()).isEqualTo(2);
+    }
 }

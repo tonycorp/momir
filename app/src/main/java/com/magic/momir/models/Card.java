@@ -54,6 +54,7 @@ public class Card {
     protected Format[] mFormats;
     @SerializedName("releasedAt")
     protected String mReleasedAt;
+    protected Integer mBoard;
 
     public Card(){}
 
@@ -247,6 +248,14 @@ public class Card {
 
     public void setReleasedAt(String releasedAt) {
         mReleasedAt = releasedAt;
+    }
+
+    public Integer getBoard(){
+        return mBoard;
+    }
+
+    public void setBoard(Integer board){
+        mBoard = board;
     }
 }
 

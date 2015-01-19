@@ -7,5 +7,7 @@
     <string name="images_disabled">Images Disabled</string>
     <string name="momir">Momir!</string>
     <string name="no_creature">"No Creature With CMC "</string>
+    <string name="me">Me</string>
+    <string name="you">You</string>
 
 </resources>

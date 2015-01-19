@@ -1,10 +1,14 @@
 package com.magic.momir.services;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 
 import com.magic.momir.MomirApplication;
 import com.magic.momir.R;
+import com.magic.momir.datasets.CardTable;
 import com.magic.momir.models.Card;
+import com.magic.momir.providers.MomirContentProvider;
 import com.magic.momir.rest.MomirApiService;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -44,6 +48,13 @@ public class MomirService {
         });
     }
 
+    @Subscribe
+    public void addCardToBoard(final AddCardEvent event) {
+        final ContentResolver resolver = mContext.getContentResolver();
+        final ContentValues contentValues = CardTable.getContentValues(event.getCard());
+        resolver.insert(MomirContentProvider.Uris.CARD_URI, contentValues);
+    }
+
     public static class ChooseCardEvent {
         private final String mCmc;
 
@@ -77,6 +88,18 @@ public class MomirService {
 
         public String getMessage(){
             return mMessage;
+        }
+    }
+
+    public static class AddCardEvent {
+        private final Card mCard;
+
+        public AddCardEvent(final Card card) {
+            mCard = card;
+        }
+
+        public Card getCard(){
+            return mCard;
         }
     }
 }

@@ -21,6 +21,7 @@ public class CardTable extends DatabaseTable {
         public static final String POWER = "power";
         public static final String TOUGHNESS = "toughness";
         public static final String MULTIVERSE_ID = "multiverse_id";
+        public static final String BOARD = "player";
     }
 
     public static ContentValues[] getContentValues(final Card[] cards) {
@@ -41,6 +42,7 @@ public class CardTable extends DatabaseTable {
         contentValues.put(Columns.SUBTYPE, card.getSubType());
         contentValues.put(Columns.POWER, card.getPower());
         contentValues.put(Columns.TOUGHNESS, card.getToughness());
+        contentValues.put(Columns.BOARD, card.getBoard());
         return contentValues;
     }
 

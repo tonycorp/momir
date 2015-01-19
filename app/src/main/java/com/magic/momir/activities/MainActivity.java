@@ -34,8 +34,12 @@ public class MainActivity extends MomirActivity {
     @InjectView(R.id.activity_card_description) protected TextView mDescription;
     @InjectView(R.id.activity_card_type_subtype) protected TextView mTypeSubtype;
     @InjectView(R.id.activity_card_power_toughness) protected TextView mPowerToughness;
+    @InjectView(R.id.activity_main_player_one) protected View mPlayerOne;
+    @InjectView(R.id.activity_main_player_two) protected View mPlayerTwo;
 
     @Inject protected Picasso mPicasso;
+
+    protected Card mCard;
 
     @Override
     public int getContentViewId() {
@@ -44,8 +48,9 @@ public class MainActivity extends MomirActivity {
 
     @Subscribe
     public void onCardsLoaded(final CardChosenEvent event){
+        mCard = event.getCard();
         if (SharedPrefUtil.imagesEnabled(this)) {
-            final Integer multiverseId = event.getCard().getMultiverseId();
+            final Integer multiverseId = mCard.getMultiverseId();
             final String imageUrl = EndpointUtil.getImageEndpoint(String.valueOf(multiverseId));
             mPicasso.load(imageUrl).into(mCardImage);
             mNoImage.setVisibility(View.GONE);
@@ -55,6 +60,8 @@ public class MainActivity extends MomirActivity {
             mCardImage.setVisibility(View.GONE);
             mNoImage.setVisibility(View.VISIBLE);
         }
+        mPlayerOne.setVisibility(View.VISIBLE);
+        mPlayerTwo.setVisibility(View.VISIBLE);
     }
 
     protected void populateCardData(final Card card) {
@@ -76,5 +83,20 @@ public class MainActivity extends MomirActivity {
         mBus.post(new ChooseCardEvent(cmc));
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mCmc.getWindowToken(), 0);
+    }
+
+    @OnClick(R.id.activity_main_player_one)
+    public void addToPlayerOne(){
+        addToPlayer(1);
+    }
+
+    @OnClick(R.id.activity_main_player_two)
+    public void addToPlayerTwo(){
+        addToPlayer(2);
+    }
+
+    private void addToPlayer(final int player) {
+        mCard.setBoard(player);
+        mBus.post(new MomirService.AddCardEvent(mCard));
     }
 }
